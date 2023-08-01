@@ -1,16 +1,6 @@
 from django.shortcuts import render
-
-#plant list
-plants = [
-   {'name':'Neem',
-          'description':'fast-growing tree of the mahogany family (Meliaceae), valued as a medicinal plant, as a source of organic pesticides, and for its timber.',
-          'size': 30,
-          'category':'Tree'},
-          {'name':'Rose',
-          'description':'A rose is either a woody perennial flowering plant of the genus Rosa in the family Rosaceae or the flower it bears.',
-          'size': 1.25,
-          'category':'Shrubs'},
-          ]
+# Import the Cat Model
+from .models import Plant
 
 # Create your views here.
 def home(request):
@@ -20,6 +10,10 @@ def about(request):
     return render(request, 'about.html')
 
 def plants_index(request):
+    plants = Plant.objects.all()
     return render(request, 'plants/index.html', {
     'plants': plants
   })
+def plants_detail(request, plant_id):
+    plant = Plant.objects.get(id=plant_id)
+    return render(request, 'plants/detail.html', { 'plant': plant })
